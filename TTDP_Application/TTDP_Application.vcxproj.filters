@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Source Files\Object">
+      <UniqueIdentifier>{f9c1ef58-2da6-4c99-ad8c-2c4cc4d7e935}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Algorithm">
+      <UniqueIdentifier>{7a558b86-ef85-4b2c-a8f6-23037760cb5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Object">
+      <UniqueIdentifier>{8156b9cc-d8b8-4c6e-b77b-bef0c292a67f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Algorithm">
+      <UniqueIdentifier>{8b2c7ff7-fefb-42c7-a642-81f4e74eae97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{c9f0025e-fbc6-4051-9af5-cd80ddb55e90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{9145ad0e-bcad-4dd0-9970-c9dfc49ec1a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Reader/Writer">
+      <UniqueIdentifier>{f14933d2-ddda-4068-9747-5675a1875807}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Reader/Writer">
+      <UniqueIdentifier>{8fa521a7-9a03-47e6-9308-930136efc798}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="displayWidget.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="generatorWidget.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="searchingWidget.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="point_of_interest.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="classic_instance.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="new_instance.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="solution.cpp">
+      <Filter>Source Files\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="instance_generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Glouton.cpp">
+      <Filter>Source Files\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="verificator.cpp">
+      <Filter>Source Files\Algorithm</Filter>
+    </ClCompile>
+    <ClCompile Include="instance_reader.cpp">
+      <Filter>Source Files\Reader/Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="instance_writer.cpp">
+      <Filter>Source Files\Reader/Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="solution_reader.cpp">
+      <Filter>Source Files\Reader/Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="solution_writer.cpp">
+      <Filter>Source Files\Reader/Writer</Filter>
+    </ClCompile>
+    <ClCompile Include="TTDP_Application.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Genetique.cpp">
+      <Filter>Source Files\Algorithm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="searchingWidget.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="displayWidget.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="generatorWidget.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="TTDP_Application.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="TTDP_Application.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="generatorWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="searchingWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="displayWidget.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="TTDP_Application.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="point_of_interest.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="classic_instance.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="new_instance.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="solution.h">
+      <Filter>Header Files\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Glouton.h">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="verificator.h">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_reader.h">
+      <Filter>Header Files\Reader/Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_writer.h">
+      <Filter>Header Files\Reader/Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="solution_reader.h">
+      <Filter>Header Files\Reader/Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="solution_writer.h">
+      <Filter>Header Files\Reader/Writer</Filter>
+    </ClInclude>
+    <ClInclude Include="Genetique.h">
+      <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
