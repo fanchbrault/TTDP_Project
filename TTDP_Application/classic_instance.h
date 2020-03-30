@@ -1,5 +1,11 @@
 #pragma once
 #include "point_of_interest.h"
+
+///
+///\class classic_instance
+///\brief Classe de l'objet classic_instance
+/// La classe permet de creer un objet correspondant a une instance classique de la litterature
+///
 class classic_instance
 {
 public:

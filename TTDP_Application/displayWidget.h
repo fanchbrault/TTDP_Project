@@ -7,6 +7,9 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QGridLayout>
+#include <QHboxLayout>
+#include <QVboxLayout>
+#include <QSpacerItem>
 #include <QFileDialog>
 #include "ui_displayWidget.h"
 #include "new_instance.h"
@@ -37,4 +40,8 @@ private:
 	QLineEdit* lineFileIn;
 	QLabel* labelFileIn;
 	Ui::displayWidget ui;
+	QLabel* labelStatus;
+	QLabel* scoreLabel;
+	QLabel* nbPOIsLabel;
+	QLabel* departureLabel;
 };

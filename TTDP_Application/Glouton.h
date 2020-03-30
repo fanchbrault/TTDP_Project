@@ -12,6 +12,11 @@
 
 
 using namespace std;
+///
+///\class Glouton
+///\brief Classe de l'algorithme glouton
+/// La classe permet de trouver une solution a partir d'une instance en suivant un algorithme glouton
+///
 class Glouton
 {
 public:

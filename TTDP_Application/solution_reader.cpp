@@ -21,7 +21,8 @@ solution solution_reader::readSolutionFile(string filename)
 	ifstream file(filename.c_str());
 
 	if (!file) {
-		cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
+		throw exception("Impossible d'ouvrir le fichier en lecture.");
+		cerr << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
 	}
 	else {
 		string line;

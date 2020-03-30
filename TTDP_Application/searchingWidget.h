@@ -6,6 +6,9 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QGridLayout>
+#include <QVBoxLayout>
+#include <QHboxLayout>
+#include <QSpacerItem>
 #include <QFileDialog>
 #include "new_instance.h"
 #include "Glouton.h"
@@ -43,4 +46,5 @@ private:
 	QPushButton* browseButtonOut;
 	QComboBox* comboAlgo;
 	QPushButton* searchingButton;
+	QLabel* labelStatus;
 };

@@ -15,7 +15,8 @@ void instance_writer::writeNewInstance(string filename, new_instance newInstance
 	ofstream file;
 	file.open(filename.c_str());
 	if (!file) {
-		cout << "ERREUR: Impossible d'ouvrir le fichier en écriture." << endl;
+		throw exception("Impossible d'ouvrir le fichier en écriture");
+		cerr << "ERREUR: Impossible d'ouvrir le fichier en écriture." << endl;
 	}
 	else
 	{

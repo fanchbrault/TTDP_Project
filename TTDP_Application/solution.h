@@ -1,6 +1,11 @@
 #pragma once
 #include "new_instance.h"
 
+///
+///\class solution
+///\brief Classe de l'objet solution
+/// La classe permet de creer un objet correspondant a une solution d'une instance
+///
 class solution
 {
 public:

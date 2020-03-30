@@ -147,9 +147,6 @@
     <ClInclude Include="solution.h">
       <Filter>Header Files\Object</Filter>
     </ClInclude>
-    <ClInclude Include="instance_generator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Glouton.h">
       <Filter>Header Files\Algorithm</Filter>
     </ClInclude>
@@ -170,6 +167,9 @@
     </ClInclude>
     <ClInclude Include="Genetique.h">
       <Filter>Header Files\Algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="instance_generator.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

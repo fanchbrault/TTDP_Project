@@ -1,6 +1,11 @@
 #include "TTDP_Application.h"
 #include <QtWidgets/QApplication>
 
+///
+///\file main.cpp
+///\brief Conception d'itineraires touristiques
+///\author Fanch Brault
+///
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);

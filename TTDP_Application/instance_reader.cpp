@@ -16,6 +16,7 @@ classic_instance instance_reader::readClassicFile(string filename)
 	ifstream file(filename.c_str());
 
 	if (!file) {
+		throw exception("Impossible d'ouvrir le fichier en lecture.");
 		cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
 	}
 	else {

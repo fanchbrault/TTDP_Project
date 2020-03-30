@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QGridLayout>
 #include <QFileDialog>
+#include <QSpacerItem>
 #include "ui_generatorWidget.h"
 #include "instance_reader.h"
 #include "instance_generator.h"

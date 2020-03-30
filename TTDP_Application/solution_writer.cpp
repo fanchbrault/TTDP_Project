@@ -20,7 +20,8 @@ void solution_writer::writeSolution(solution solution, string filename)
 	fstream file;
 	file.open(filename.c_str(), fstream::app);
 	if (!file) {
-		cout << "ERREUR: Impossible d'ouvrir le fichier en écriture." << endl;
+		throw exception("Impossible d'ouvrir le fichier en écriture.");
+		cerr << "ERREUR: Impossible d'ouvrir le fichier en écriture." << endl;
 	}
 	else
 	{

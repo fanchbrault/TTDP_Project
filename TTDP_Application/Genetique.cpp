@@ -19,7 +19,7 @@ solution Genetique::searchSolution(new_instance instance)
 	t1 = clock();
 	double timer = 0;
 	vector<vector<int>> population;
-	int bestScore = 0;
+	int bestScore = -999999;
 	vector<int> bestList;
 	double** travelTime = instance.setTravelTime();
 	srand(time(NULL));
@@ -43,13 +43,18 @@ solution Genetique::searchSolution(new_instance instance)
 	timer = double(t2 - t1) / CLOCKS_PER_SEC;
 	qDebug() << "Temps pour la premiere gen : " << timer << endl;
 	int generationNumber = 1;
-	while (timer < 100) {
+	while (timer < 600) {
 		generationNumber++;
 		vector<vector<int>> newPopulation;
 		vector<int> newScores;
 		for (int i = 0; i < populationSize/2; i++) {
-			int breedPoint1 = rand() % 5;
-			int breedPoint2 = rand() % (population.at(0).size()-5) + 5;
+			int breedPoint1 = rand() % population.at(0).size();
+			int breedPoint2 = rand() % population.at(0).size();
+			if (breedPoint1 > breedPoint2) {
+				int tmp = breedPoint1;
+				breedPoint1 = breedPoint2;
+				breedPoint2 = tmp;
+			}
 			int idParent1 = rand() % population.size();
 			vector<int> parent1 = population.at(idParent1);
 			population.erase(population.begin() + idParent1);
@@ -58,6 +63,7 @@ solution Genetique::searchSolution(new_instance instance)
 			vector<int> parent2 = population.at(idParent2);
 			population.erase(population.begin() + idParent2);
 			newPopulation.push_back(parent2);
+
 			newScores.push_back(scores.at(idParent1));
 			scores.erase(scores.begin() + idParent1);
 			newScores.push_back(scores.at(idParent2));
@@ -66,7 +72,7 @@ solution Genetique::searchSolution(new_instance instance)
 			vector<int> child1 = crossBreed(parent1, parent2, breedPoint1, breedPoint2);
 			vector<int> child2 = crossBreed(parent2, parent1, breedPoint1, breedPoint2);
 			child1 = mutation(child1);
-			child1 = mutation(child1);
+			child2 = mutation(child2);
 			newPopulation.push_back(child1);
 			newPopulation.push_back(child2);
 			solution solChild1 = decode(child1, instance, travelTime);
@@ -109,7 +115,9 @@ solution Genetique::searchSolution(new_instance instance)
 		qDebug() << "Temps pour la gen " << generationNumber << " : " << timer << endl;
 		qDebug() << "Best Solution : " << bestScore << endl;
 	}
-	return decode(bestList, instance, travelTime);
+	solution bestSolution = decode(bestList, instance, travelTime);
+	bestSolution = getDurationForAll(bestSolution, travelTime);
+	return bestSolution;
 }
 
 vector<int> Genetique::generateList(new_instance instance)
@@ -226,71 +234,46 @@ solution Genetique::deleteImplication(solution s, point_of_interest POI)
 
 vector<int> Genetique::crossBreed(vector<int> list1, vector<int> list2, int point1, int point2)
 {
+	int size = list1.size();
+	vector<int> child(size, -1);
 
-	vector<int> child(list1.size(), -1);
 	for (int i = point1; i < point2; i++) {
-		child.erase(child.begin() + i);
-		child.insert(child.begin() + i, list1.at(i));
-	}
-	for (int i = point1; i < point2; i++) {
-		pair<bool, int> e = findInVector(child, point1, point2, list2.at(i));
-		if (!e.first) {
-			child = insertInChild(child, list1, list2, point1, point2, list2.at(i));
-		}
+		child.at(i) = list2.at(i);
 	}
 
 	for (int i = 0; i < point1; i++) {
-		if (child.at(i) == -1) {
-			child.erase(child.begin() + i);
-			child.insert(child.begin() + i, list2.at(i));
+			child.at(i) = list1.at(i);
+	}
+	for (int i = point2; i < size; i++) {
+			child.at(i) = list1.at(i);
+	}
+
+	for (int i = 0; i < point1; i++) {
+		if (find(child.begin() + point1, child.begin() + point2, child.at(i)) != child.begin() + point2) {
+			child.at(i) = -1;
 		}
 	}
-	for (int i = point2; i < child.size(); i++) {
-		if (child.at(i) == -1) {
-			child.erase(child.begin() + i);
-			child.insert(child.begin() + i, list2.at(i));
+	for (int i = point2; i < size; i++) {
+		if (find(child.begin() + point1, child.begin() + point2, child.at(i)) != child.begin() + point2) {
+			child.at(i) = -1;
 		}
 	}
+	vector<int> remainingPOIinParent1;
+	for (int i = 0; i < size; i++) {
+		if (find(child.begin(), child.end(), list1.at(i)) == child.end()) {
+			remainingPOIinParent1.push_back(list1.at(i));
+		}
+	}
+	for (int i = 0; i < size; i++) {
+		if (child.at(i) == -1) {
+			child.at(i) = remainingPOIinParent1.at(0);
+			remainingPOIinParent1.erase(remainingPOIinParent1.begin());
+		}
+	}
+
 	return child;
 }
 
-pair<bool, int> Genetique::findInVector(vector<int> v, int point1, int point2, int element)
-{
-	pair<bool, int> result;
-
-	vector<int>::iterator it = find(v.begin() + point1, v.begin() + point2, element);
-	
-	if (it != v.begin() + point2) {
-		result.first = true;
-		result.second = distance(v.begin(), it);
-	}
-	else {
-		result.first = false;
-		result.second = -1;
-	}
-	return result;
-}
-
-vector<int> Genetique::insertInChild(vector<int> child, vector<int> list1, vector<int> list2, int point1, int point2, int element)
-{
-	int index = getIndex(list1, list2, point1, point2, element);
-	child.erase(child.begin() + index);
-	child.insert(child.begin() + index, element);
-	return child;
-}
-
-int Genetique::getIndex(vector<int> list1, vector<int> list2, int point1, int point2, int element)
-{
-	pair<bool, int> p = findInVector(list1, 0, list1.size(), element);
-	int index;
-	if (p.second < point1 || p.second >= point2) {
-		index = p.second;
-	}
-	else {
-		index = getIndex(list1, list2, point1, point2, list2.at(p.second));
-	}
-	return index;
-}
 
 vector<int> Genetique::mutation(vector<int> list)
 {
@@ -302,6 +285,54 @@ vector<int> Genetique::mutation(vector<int> list)
 	}
 	
 	return list;
+}
+
+solution Genetique::getDurationForAll(solution s, double ** traveltime)
+{
+	new_instance instance = s.getInstance();
+	point_of_interest startingPoint = s.getInstance().getStartingPoint();
+	vector<point_of_interest> pois = s.getPoisVector();
+	int size = pois.size();
+	double Xstart = startingPoint.getX();
+	double Ystart = startingPoint.getY();
+	double startCT = startingPoint.getOpeningTimeWindow()[4];
+	double Xfirst = pois.at(0).getX();
+	double Yfirst = pois.at(0).getY();
+	double Xlast = pois.at(pois.size() - 1).getX();
+	double Ylast = pois.at(pois.size() - 1).getY();
+	double SToFirst = sqrt((Xstart - Xfirst)*(Xstart - Xfirst) + (Ystart - Yfirst)*(Ystart - Yfirst));
+	double LastToS = sqrt((Xstart - Xlast)*(Xstart - Xlast) + (Ystart - Ylast)*(Ystart - Ylast));
+	double lastCT = pois.at(pois.size() - 1).getOpeningTimeWindow()[4];
+	double firstOT = pois.at(0).getOpeningTimeWindow()[0];
+
+	double ** poisInSol = new double*[2];
+	poisInSol[0] = new double[size];
+	poisInSol[1] = new double[size];
+	for (int i = 0; i < size; i++) {
+		poisInSol[0][i] = pois.at(i).getId();
+		poisInSol[1][i] = 0;
+	}
+	if (startCT < lastCT + LastToS) {
+		poisInSol[1][size - 1] = startCT - LastToS - pois.at(size - 1).getDuration();
+	}
+	else {
+		poisInSol[1][size - 1] = lastCT - pois.at(size - 1).getDuration();
+	}
+	for (int i = size - 1; i > 0; i--) {
+		int currentId = poisInSol[0][i];
+		int previousId = poisInSol[0][i - 1];
+		double travel = traveltime[currentId - 2][previousId - 2];
+		if (poisInSol[1][i] < pois.at(i - 1).getOpeningTimeWindow()[4] + travel) {
+			poisInSol[1][i - 1] = poisInSol[1][i] - travel - pois.at(i - 1).getDuration();
+		}
+		else {
+			poisInSol[1][i - 1] = pois.at(i - 1).getOpeningTimeWindow()[4] - pois.at(i - 1).getDuration();
+		}
+	}
+
+	double departureTime = poisInSol[1][0] - SToFirst;
+	solution sol = solution(departureTime, instance, pois.size(), poisInSol, s.getScore());
+	return sol;
 }
 
 

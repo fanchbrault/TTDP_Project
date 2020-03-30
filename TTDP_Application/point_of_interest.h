@@ -2,11 +2,15 @@
 #include <vector>
 
 using namespace std;
+///
+///\class point_of_interest
+///\brief Classe de l'objet point_of_interest
+/// La classe permet de creer un objet correspondant a un POI
+///
 class point_of_interest
 {
 public:
 	point_of_interest();
-	//point_of_interest(int nbCategories, int tId, double tX, double tY, double tDuration, double tScore, double tEntranceFee, int* tCategories, double* tOpeningTimeWindow);
 	point_of_interest(int nbCategories, int tId, double tX, double tY, double tDuration, double tScore, double tEntranceFee, int* tCategories, double* tOpeningTimeWindow, vector<int> tPrecedence, vector<int> tImplication, vector<int>tExclusion);
 	~point_of_interest();
 	int getId();

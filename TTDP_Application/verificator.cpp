@@ -288,27 +288,25 @@ bool verificator::verifyOTV(solution sol, double ** travelTime, double Xstart, d
 	double minArr = (firstOT > SToFirst ? firstOT : SToFirst);
 	double lastCT = pois.at(pois.size() - 1).getOpeningTimeWindow()[4];
 	double maxArr = 0.0;
-	if ( lastCT + LastToS > startCT) {
-		maxArr = startCT;
-	}
-	else {
-		maxArr = lastCT + LastToS;
-	}
 	for (int i = 0; i < pois.size() - 1; i++) {
 		minArr += pois.at(i).getDuration();
 		int currentId = pois.at(i).getId();
 		int nextId = pois.at(i+1).getId();
-		if (pois.at(i + 1).getOpeningTimeWindow()[0] > minArr + (travelTime[currentId - 2][nextId - 2]))
+		if (pois.at(i + 1).getOpeningTimeWindow()[0] > minArr + travelTime[currentId - 2][nextId - 2])
 		{
 			minArr = pois.at(i + 1).getOpeningTimeWindow()[0];
 		}
 		else {
 			minArr += (travelTime[currentId - 2][nextId - 2]);
 		}
+		maxArr = pois.at(i + 1).getOpeningTimeWindow()[4] - pois.at(i + 1).getDuration();
+		if (maxArr < minArr) {
+			return false;
+		}
 	}
 	minArr += pois.at(pois.size() - 1).getDuration();
 	minArr += LastToS;
-	return minArr > maxArr ? false : true;
+	return minArr > startCT ? false : true;
 }
 
 bool verificator::verifyPrecedenceV(solution sol, point_of_interest POI, int index)

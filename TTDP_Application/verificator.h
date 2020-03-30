@@ -1,3 +1,4 @@
+
 #pragma once
 #include "solution.h"
 #include "new_instance.h"
@@ -6,6 +7,11 @@
 
 using namespace std;
 
+///
+///\class verificator
+///\brief Classe de verification de solution
+/// La classe permet de verifier la faisabilité d'une solution dans son entierte ou juste verifier si une ou plusieurs contraintes sont respectees
+///
 class verificator
 {
 public:
