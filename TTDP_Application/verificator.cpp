@@ -30,7 +30,7 @@ bool verificator::verifySolution(solution solution, double** travelTime)
 		return false;
 
 	/*Contrainte de fenêtre de temps*/
-	verif = verifyOpeningTime(nbPoisSelected, pois, solution);
+	verif = verifyOpeningTime(nbPoisSelected, pois, solution, travelTime);
 	if (!verif)
 		return false;
 
@@ -137,14 +137,40 @@ bool verificator::verifyMandatory(int nbMandatory, int* mandatory, int nbPois, d
 	return allMandIsInSol;
 }
 
-bool verificator::verifyOpeningTime(int nbPois, point_of_interest * pois, solution solution)
+bool verificator::verifyOpeningTime(int nbPois, point_of_interest * pois, solution solution, double** travelTime)
 {
-	for (int i = 0; i < nbPois; i++) {
-		if (solution.getPoisSelected()[1][i] < pois[i].getOpeningTimeWindow()[0] || solution.getPoisSelected()[1][i] + pois[i].getDuration() > pois[i].getOpeningTimeWindow()[4]) {
+	double Xstart = solution.getInstance().getStartingPoint().getX();
+	double Ystart = solution.getInstance().getStartingPoint().getY();
+	double Xfirst = pois[0].getX();
+	double Yfirst = pois[0].getY();
+	double Xlast = pois[nbPois-1].getX();
+	double Ylast = pois[nbPois - 1].getY();
+	double SToFirst = sqrt((Xstart - Xfirst)*(Xstart - Xfirst) + (Ystart - Yfirst)*(Ystart - Yfirst));
+	double LastToS = sqrt((Xstart - Xlast)*(Xstart - Xlast) + (Ystart - Ylast)*(Ystart - Ylast));
+	double firstOT = pois[0].getOpeningTimeWindow()[0];
+	double minArr = (firstOT > SToFirst ? firstOT : SToFirst);
+	double lastCT = pois[nbPois - 1].getOpeningTimeWindow()[4];
+	double maxArr = 0.0;
+	for (int i = 0; i < nbPois - 1; i++) {
+		minArr += pois[i].getDuration();
+		int currentId = pois[i].getId();
+		int nextId = pois[i + 1].getId();
+		if (pois[i + 1].getOpeningTimeWindow()[0] > minArr + travelTime[currentId - 2][nextId - 2])
+		{
+			minArr = pois[i + 1].getOpeningTimeWindow()[0];
+		}
+		else {
+			minArr += (travelTime[currentId - 2][nextId - 2]);
+		}
+		maxArr = pois[i + 1].getOpeningTimeWindow()[4] - pois[i + 1].getDuration();
+		if (maxArr < minArr) {
 			return false;
 		}
 	}
-	return true;
+	minArr += pois[nbPois - 1].getDuration();
+	minArr += LastToS;
+	double startCT = solution.getInstance().getStartingPoint().getOpeningTimeWindow()[4];
+	return minArr >  startCT ? false : true;
 }
 
 bool verificator::verifyPrecedence(int nbPois, point_of_interest* pois)

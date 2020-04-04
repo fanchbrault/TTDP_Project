@@ -14,6 +14,12 @@ Genetique::~Genetique()
 
 solution Genetique::searchSolution(new_instance instance)
 {
+	string logFile = "C:/Users/fanch/Desktop/log.txt";
+	ofstream log;
+	log.open(logFile.c_str());
+	log << "num gen \t min \t max \t moy" << endl;
+	int generationOfBS = 1;
+
 	int populationSize = 50;
 	clock_t t1, t2;
 	t1 = clock();
@@ -30,21 +36,27 @@ solution Genetique::searchSolution(new_instance instance)
 		population.push_back(newList);
 	}
 	vector<int> scores;
+	int sumScore = 0;
 	for (int i = 0; i < populationSize; i++) {
 		solution s = decode(population.at(i), instance, travelTime);
 		scores.push_back(s.getScore());
+		sumScore += s.getScore();
 		if (s.getScore() > bestScore) {
 			bestScore = s.getScore();
 			bestList = population.at(i);
 		}
 	}
-	
+	int max = *max_element(scores.begin(), scores.end());
+	int min = *min_element(scores.begin(), scores.end());
+	double moy = sumScore / populationSize;
+	log << "1 \t " << min << "\t " << max << "\t" << moy << endl;
 	t2 = clock();
 	timer = double(t2 - t1) / CLOCKS_PER_SEC;
 	qDebug() << "Temps pour la premiere gen : " << timer << endl;
 	int generationNumber = 1;
-	while (timer < 600) {
+	while (timer < 15) {
 		generationNumber++;
+		sumScore = 0;
 		vector<vector<int>> newPopulation;
 		vector<int> newScores;
 		for (int i = 0; i < populationSize/2; i++) {
@@ -96,7 +108,9 @@ solution Genetique::searchSolution(new_instance instance)
 			if (score1 > score2) {
 				population.push_back(list1);
 				scores.push_back(score1);
+				sumScore += score1;
 				if (score1 > bestScore) {
+					generationOfBS = generationNumber;
 					bestScore = score1;
 					bestList = list1;
 				}
@@ -104,12 +118,18 @@ solution Genetique::searchSolution(new_instance instance)
 			else {
 				population.push_back(list2);
 				scores.push_back(score2);
+				sumScore += score2;
 				if (score2 > bestScore) {
+					generationOfBS = generationNumber;
 					bestScore = score2;
 					bestList = list2;
 				}
 			}
 		}
+		int max = *max_element(scores.begin(), scores.end());
+		int min = *min_element(scores.begin(), scores.end());
+		double moy = sumScore / populationSize;
+		log << generationNumber << "\t " << min << "\t " << max << "\t" << moy << endl;
 		t2 = clock();
 		timer = double(t2 - t1) / CLOCKS_PER_SEC;
 		qDebug() << "Temps pour la gen " << generationNumber << " : " << timer << endl;
@@ -117,6 +137,7 @@ solution Genetique::searchSolution(new_instance instance)
 	}
 	solution bestSolution = decode(bestList, instance, travelTime);
 	bestSolution = getDurationForAll(bestSolution, travelTime);
+	log << "Generation of the best solution : " << generationOfBS;
 	return bestSolution;
 }
 
@@ -224,11 +245,6 @@ solution Genetique::insertPOI(solution s, point_of_interest POI, double** travel
 			poisVector.erase(poisVector.begin() + i);
 		}
 	}
-	return s;
-}
-
-solution Genetique::deleteImplication(solution s, point_of_interest POI)
-{
 	return s;
 }
 

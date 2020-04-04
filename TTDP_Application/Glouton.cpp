@@ -142,13 +142,3 @@ bool Glouton::findIdInSol(int id, vector<int> pois)
 	}
 	return false;
 }
-
-
-void Glouton::displaySolution(solution solution)
-{
-	cout << "Score : " << solution.getScore() << endl;
-	cout << "POIs : " << endl;
-	for (int i = 0; i < solution.getNbPoisSelected(); i++) {
-		cout << solution.getPoisSelected()[0][i] << " a : " << solution.getPoisSelected()[1][i] << endl;
-	}
-}
